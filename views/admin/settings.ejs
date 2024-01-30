@@ -1,0 +1,33 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h1>Settings</h1>
+    <form
+      action="/admin/settings"
+      method="post"
+      class="form mt-4 mx-auto"
+      style="max-width: 500px"
+    >
+      <h3 class="text-white my-5">Change Password</h3>
+      <%-include("./partials/messages")%>
+      <div class="mb-3">
+        <input
+          type="password"
+          placeholder="New Password"
+          name="password"
+          class="form-control text-white"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <input
+          type="password"
+          placeholder="Retype Password"
+          name="password2"
+          class="form-control text-white"
+          required
+        />
+      </div>
+      <button class="btn btn-success">Update</button>
+    </form>
+  </div>
+</div>
