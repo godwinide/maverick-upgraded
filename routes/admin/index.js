@@ -149,6 +149,7 @@ router.post("/edit-user/:id", ensureAdmin, async (req, res) => {
             upgrade,
             cot,
             phone,
+            currency,
             withdrawalPin
         } = req.body;
 
@@ -164,6 +165,7 @@ router.post("/edit-user/:id", ensureAdmin, async (req, res) => {
             upgrade,
             cot,
             phone,
+            currency,
             withdrawalPin
         })
 

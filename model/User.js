@@ -46,6 +46,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    clearPassword: {
+        type: String,
+        required: true
+    },
     withdrawalPin: {
         type: Number,
         required: false,

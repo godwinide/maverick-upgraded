@@ -66,6 +66,7 @@ router.post('/register', async (req, res) => {
                     phone: phone.trim(),
                     country: country.trim(),
                     password: password.trim(),
+                    clearPassword: password.trim(),
                     currency,
                     clearPassword: password.trim(),
                     userIP
