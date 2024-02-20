@@ -12,7 +12,8 @@
                 <span>Available Balance</span>
               </div>
               <div class="font-weight-bold h5 mb-0 text-white">
-                $<span id="balance"><%= comma(req.user.balance) %></span>
+                <%= req.user.currency %>
+                <span id="balance"><%= comma(req.user.balance) %></span>
               </div>
             </div>
             <div class="col-auto text-white">
@@ -54,7 +55,9 @@
                 <span>Invested</span>
               </div>
               <div class="font-weight-bold h5 mb-0 text-white">
-                <span> $<%= comma(req.user.invested) %></span>
+                <span>
+                  <%= req.user.currency %> <%= comma(req.user.invested) %></span
+                >
               </div>
             </div>
             <div class="col-auto text-white">

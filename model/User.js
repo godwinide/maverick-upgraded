@@ -40,7 +40,7 @@ const UserSchema = new Schema({
     currency: {
         type: String,
         required: false,
-        default: "$"
+        default: "USD"
     },
     password: {
         type: String,
