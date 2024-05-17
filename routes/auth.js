@@ -2,10 +2,12 @@ const router = require("express").Router();
 const User = require("../model/User");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const Site = require("../model/Site");
 
-router.get("/login", (req, res) => {
+router.get("/login", async (req, res) => {
     try {
-        return res.render("login", { pageTitle: "Login", res, req });
+        const site = await Site.findOne();
+        return res.render("login", { pageTitle: "Login", site, res, req });
     } catch (err) {
         return res.redirect("/");
     }
@@ -25,9 +27,10 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", async (req, res) => {
     try {
-        return res.render("register", { pageTitle: "Register", res });
+        const site = await Site.findOne();
+        return res.render("register", { pageTitle: "Register", site, res });
     } catch (err) {
         return res.redirect("/");
     }

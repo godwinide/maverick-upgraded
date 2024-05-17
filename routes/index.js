@@ -1,53 +1,62 @@
+const Site = require("../model/Site");
+
 const router = require("express").Router();
 
-router.get("/", (req, res) => {
+
+router.get("/", async (req, res) => {
     try {
-        return res.render("index", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("index", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");
     }
 });
 
-router.get("/about", (req, res) => {
+router.get("/about", async (req, res) => {
     try {
-        return res.render("about-us", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("about-us", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");
     }
 });
 
-router.get("/contact-us", (req, res) => {
+router.get("/contact-us", async (req, res) => {
     try {
-        return res.render("contact-us", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("contact-us", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");
     }
 });
 
-router.get("/market-data", (req, res) => {
+router.get("/market-data", async (req, res) => {
     try {
-        return res.render("market-data", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("market-data", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");
     }
 });
 
-router.get("/services", (req, res) => {
+router.get("/services", async (req, res) => {
     try {
-        return res.render("index", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("index", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");
     }
 });
 
-router.get("/faq", (req, res) => {
+router.get("/faq", async (req, res) => {
     try {
-        return res.render("faq", { pageTitle: "Welcome", req, res });
+        const site = await Site.findOne();
+        return res.render("faq", { pageTitle: "Welcome", site, req, res });
     }
     catch (err) {
         return res.redirect("/");

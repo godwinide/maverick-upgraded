@@ -1,7 +1,6 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <h1 class="text-center">Manage User - <%= client.firstname %></h1>
-
     <form
       action="/admin/edit-user/<%=client.id%>"
       method="post"
@@ -138,6 +137,24 @@
         />
       </div>
       <div class="mb-3">
+        <label class="text-white">Account Level</label>
+        <select
+          class="form-select form-control text-white"
+          aria-label="Account Level"
+          required
+          name="accountLevel"
+        >
+          <option value="<%=client.accountLevel%>" class="text-white">
+            Select
+          </option>
+          <option value="Starter" class="text-white">Starter</option>
+          <option value="Gold" class="text-white">Gold</option>
+          <option value="Deluxe" class="text-white">Deluxe</option>
+          <option value="Executive" class="text-white">Executive</option>
+          <option value="Master" class="text-white">Master</option>
+        </select>
+      </div>
+      <div class="mb-3">
         <label class="text-white">Ask for upgrade</label>
         <select
           class="form-select form-control text-white"
@@ -146,6 +163,21 @@
           name="upgrade"
         >
           <option value="<%=client.upgrade%>" class="text-white">Select</option>
+          <option value="true" class="text-white">Yes</option>
+          <option value="false" class="text-white">No</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="text-white">Deactivate Account?</label>
+        <select
+          class="form-select form-control text-white"
+          aria-label="Deactivate Account"
+          required
+          name="disabled"
+        >
+          <option value="<%=client.disabled%>" class="text-white">
+            Select
+          </option>
           <option value="true" class="text-white">Yes</option>
           <option value="false" class="text-white">No</option>
         </select>

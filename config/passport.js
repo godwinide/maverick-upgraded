@@ -14,6 +14,9 @@ module.exports = function (passport) {
         if (!user) {
           return done(null, false, { message: 'invalid email or password' });
         }
+        if (user.disabled) {
+          return done(null, false, { message: 'sorry, your account has been deactivated' });
+        }
         // Match password
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) throw err;

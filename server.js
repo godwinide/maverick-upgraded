@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
+const Site = require("./model/Site");
 
 // CONFIGS
 require("dotenv").config();
@@ -34,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Global variables
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
   res.locals.siteName = "Maverick Exchange"
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');

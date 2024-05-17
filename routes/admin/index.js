@@ -5,6 +5,7 @@ const Withdraw = require("../../model/Withdraw");
 const { ensureAdmin } = require("../../config/auth");
 const comma = require("../../utils/comma");
 const bcrypt = require("bcryptjs");
+const Site = require("../../model/Site");
 
 router.get("/", ensureAdmin, async (req, res) => {
     try {
@@ -20,11 +21,49 @@ router.get("/", ensureAdmin, async (req, res) => {
 
 router.get("/settings", ensureAdmin, async (req, res) => {
     try {
-        return res.render("admin/settings", { req, res, layout: "layout3" });
+        const site = await Site.findOne();
+        return res.render("admin/settings", { req, res, site: site || {}, layout: "layout3" });
     } catch (err) {
         return res.redirect("/admin")
     }
 });
+
+router.post("/settings/addresses", ensureAdmin, async (req, res) => {
+    try {
+        const {
+            bitcoinAddress,
+            bchAddress,
+            ethereumAddress,
+            usdtAddress,
+            whatsappNumber
+        } = req.body;
+        const siteExists = await Site.findOne({});
+        if (siteExists) {
+            await Site.updateOne({ _id: siteExists._id }, {
+                bitcoinAddress: bitcoinAddress ? bitcoinAddress : siteExists.bitcoinAddress,
+                bchAddress: bchAddress ? bchAddress : siteExists.bchAddress,
+                ethereumAddress: ethereumAddress ? ethereumAddress : siteExists.ethereumAddress,
+                usdtAddress: usdtAddress ? usdtAddress : siteExists.usdtAddress,
+                whatsappNumber: whatsappNumber ? whatsappNumber : siteExists.whatsappNumber,
+            })
+        } else {
+            const newSite = new Site({
+                bitcoinAddress,
+                ethereumAddress,
+                usdtAddress,
+                whatsappNumber
+            });
+            await newSite.save();
+        }
+
+        req.flash("Addresses updated successfully");
+        return res.redirect("/admin/settings");
+
+    } catch (err) {
+        return res.redirect("/admin")
+    }
+});
+
 
 router.post("/settings", ensureAdmin, async (req, res) => {
     try {
@@ -145,8 +184,9 @@ router.post("/edit-user/:id", ensureAdmin, async (req, res) => {
             email,
             balance,
             invested,
-            accountLevel,
             upgrade,
+            disabled,
+            accountLevel,
             cot,
             phone,
             currency,
@@ -161,6 +201,7 @@ router.post("/edit-user/:id", ensureAdmin, async (req, res) => {
             email,
             balance,
             invested,
+            disabled,
             accountLevel,
             upgrade,
             cot,

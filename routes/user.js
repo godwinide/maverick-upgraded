@@ -8,10 +8,12 @@ const Deposit = require("../model/Deposit");
 const uuid = require("uuid");
 const Withdraw = require("../model/Withdraw");
 const checkVerification = require("../config/verify");
+const Site = require("../model/Site");
 
-router.get("/dashboard", ensureAuthenticated, checkVerification, (req, res) => {
+router.get("/dashboard", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
-        return res.render("dashboard", { res, pageTitle: "Dashboard", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("dashboard", { res, pageTitle: "Dashboard", site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
@@ -19,7 +21,8 @@ router.get("/dashboard", ensureAuthenticated, checkVerification, (req, res) => {
 
 router.get("/locked", ensureAuthenticated, async (req, res) => {
     try {
-        return res.render("locked", { res, pageTitle: "Locked", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("locked", { res, pageTitle: "Locked", req, site, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/locked");
     }
@@ -27,8 +30,9 @@ router.get("/locked", ensureAuthenticated, async (req, res) => {
 
 router.get("/deposit", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
+        const site = await Site.findOne();
         const deposits = await Deposit.find({ userID: req.user.id });
-        return res.render("deposit", { res, pageTitle: "Deposit", deposits, req, comma, layout: "layout2" });
+        return res.render("deposit", { res, site, pageTitle: "Deposit", deposits, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
@@ -78,8 +82,9 @@ router.post("/deposit", ensureAuthenticated, checkVerification, async (req, res)
 
 router.get("/withdraw", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
+        const site = await Site.findOne();
         const withdrawals = await Withdraw.find({ userID: req.user.id });
-        return res.render("withdraw", { res, pageTitle: "Deposit", withdrawals, req, comma, layout: "layout2" });
+        return res.render("withdraw", { res, pageTitle: "Deposit", withdrawals, site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
@@ -146,9 +151,10 @@ router.post("/withdraw", ensureAuthenticated, checkVerification, async (req, res
     }
 });
 
-router.get("/upgrade", ensureAuthenticated, checkVerification, (req, res) => {
+router.get("/upgrade", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
-        return res.render("upgrade", { res, pageTitle: "Deposit", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("upgrade", { res, pageTitle: "Deposit", site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
@@ -156,24 +162,27 @@ router.get("/upgrade", ensureAuthenticated, checkVerification, (req, res) => {
 
 router.get("/transactions", ensureAuthenticated, async (req, res) => {
     try {
+        const site = await Site.findOne();
         const transactions = await History.find({ userID: req.user.id });
-        return res.render("transaction", { res, pageTitle: "Transactions", transactions, req, comma, layout: "layout2" });
+        return res.render("transaction", { res, pageTitle: "Transactions", transactions, req, site, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
 });
 
-router.get("/trade-history", ensureAuthenticated, checkVerification, (req, res) => {
+router.get("/trade-history", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
-        return res.render("tradeHistory", { res, pageTitle: "Trade History", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("tradeHistory", { res, pageTitle: "Trade History", site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
 });
 
-router.get("/update-password", ensureAuthenticated, checkVerification, (req, res) => {
+router.get("/update-password", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
-        return res.render("updatePassword", { res, pageTitle: "Update Password", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("updatePassword", { res, pageTitle: "Update Password", site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }
@@ -211,9 +220,10 @@ router.post("/update-password", ensureAuthenticated, checkVerification, async (r
     }
 });
 
-router.get("/top-investors", ensureAuthenticated, checkVerification, (req, res) => {
+router.get("/top-investors", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
-        return res.render("topInvestor", { res, pageTitle: "Top Investors", req, comma, layout: "layout2" });
+        const site = await Site.findOne();
+        return res.render("topInvestor", { res, pageTitle: "Top Investors", site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }

@@ -37,6 +37,11 @@ const UserSchema = new Schema({
         required: false,
         default: "STARTER"
     },
+    disabled: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
     currency: {
         type: String,
         required: false,
