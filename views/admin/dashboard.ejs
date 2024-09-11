@@ -79,7 +79,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% pendingDeposits.reverse().slice(0,100).forEach(c => {%>
+                  <% pendingDeposits.reverse().forEach(c => {%>
                   <tr>
                     <td class="text-white"><%= c.reference %></td>
                     <td class="text-white"><%= c.method %></td>
@@ -133,7 +133,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% pendingWithdrawals.reverse().slice(0,100).forEach(c => {%>
+                  <% pendingWithdrawals.reverse().forEach(c => {%>
                   <tr>
                     <td class="text-white"><%= c.reference %></td>
                     <td class="text-white"><%= c.method %></td>
