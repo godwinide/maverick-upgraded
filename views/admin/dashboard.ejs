@@ -79,7 +79,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% pendingDeposits.slice(0,11).forEach(c => {%>
+                  <% pendingDeposits.reverse().slice(0,100).forEach(c => {%>
                   <tr>
                     <td class="text-white"><%= c.reference %></td>
                     <td class="text-white"><%= c.method %></td>
@@ -133,7 +133,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% pendingWithdrawals.slice(0,11).forEach(c => {%>
+                  <% pendingWithdrawals.reverse().slice(0,100).forEach(c => {%>
                   <tr>
                     <td class="text-white"><%= c.reference %></td>
                     <td class="text-white"><%= c.method %></td>
@@ -222,7 +222,13 @@
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-  new DataTable("#table1");
-  new DataTable("#table2");
-  new DataTable("#table3");
+  new DataTable("#table1", {
+    sort: false,
+  });
+  new DataTable("#table2", {
+    sort: false,
+  });
+  new DataTable("#table3", {
+    sort: false,
+  });
 </script>

@@ -131,6 +131,7 @@ router.get("/approve-withdrawal/:reference", ensureAdmin, async (req, res) => {
         req.flash("success_msg", "Withdrawal Approved");
         return res.redirect("/admin");
     } catch (err) {
+        console.log(err);
         return res.redirect("/admin")
     }
 });
