@@ -70,7 +70,7 @@
               <table class="table" id="table1">
                 <thead>
                   <tr>
-                    <th>Reference</th>
+                    <th>Client</th>
                     <th>Payment Method</th>
                     <th>Amount</th>
                     <th>Date</th>
@@ -81,7 +81,10 @@
                 <tbody>
                   <% pendingDeposits.reverse().forEach(c => {%>
                   <tr>
-                    <td class="text-white"><%= c.reference %></td>
+                    <!-- <td class="text-white"><%= c.reference %></td> -->
+                    <td class="text-white">
+                      <%= c.user.firstname + " " + c.user.lastname %>
+                    </td>
                     <td class="text-white"><%= c.method %></td>
                     <td class="text-white"><%= comma(c.amount) %></td>
                     <td class="text-white">
@@ -124,7 +127,7 @@
               <table class="table" id="table2">
                 <thead>
                   <tr>
-                    <th>Reference</th>
+                    <th>Client</th>
                     <th>Payment Method</th>
                     <th>Amount</th>
                     <th>Date</th>
@@ -135,7 +138,9 @@
                 <tbody>
                   <% pendingWithdrawals.reverse().forEach(c => {%>
                   <tr>
-                    <td class="text-white"><%= c.reference %></td>
+                    <td class="text-white">
+                      <%= c.user.firstname + " " + c.user.lastname %>
+                    </td>
                     <td class="text-white"><%= c.method %></td>
                     <td class="text-white"><%= comma(c.amount) %></td>
                     <td class="text-white">
