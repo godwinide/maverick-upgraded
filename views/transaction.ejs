@@ -30,7 +30,7 @@
                 <thead>
                   <tr>
                     <th>Reference</th>
-                    <th>Payment Method</th>
+                    <th>Type</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Status</th>
@@ -40,7 +40,7 @@
                   <% transactions.reverse().map(dep => {%>
                   <tr>
                     <td><%= dep.reference %></td>
-                    <td><%= dep.method %></td>
+                    <td><%= dep.type || '' %></td>
                     <td><%= comma(dep.amount) %></td>
                     <td><%= new Date(dep.date).toDateString() %></td>
                     <% if (dep.status == 'pending') {%>

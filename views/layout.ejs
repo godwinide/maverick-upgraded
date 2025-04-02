@@ -407,7 +407,6 @@
 
     <script async src='https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
 
-    <% if(site !== 'undefined'){%>
       <script>
         var wa_btnSetting = {
           btnColor: "#16BE45",
@@ -417,7 +416,7 @@
           marginLeft: 20,
           marginRight: 20,
           btnPosition: "left",
-          whatsAppNumber: "<%= site.whatsappNumber %>",
+          whatsAppNumber: "<%= site?.whatsappNumber %>",
           welcomeMessage: "Hello",
           zIndex: 999999,
           btnColorScheme: "light",
@@ -426,7 +425,6 @@
           _waEmbed(wa_btnSetting);
         };
       </script>
-      <%}%>
     
 
     <!-- Template JS Files -->

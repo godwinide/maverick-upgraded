@@ -6,6 +6,8 @@ const { ensureAdmin } = require("../../config/auth");
 const comma = require("../../utils/comma");
 const bcrypt = require("bcryptjs");
 const Site = require("../../model/Site");
+const uuid = require("uuid");
+
 
 router.get("/", ensureAdmin, async (req, res) => {
     try {
@@ -92,6 +94,43 @@ router.post("/settings", ensureAdmin, async (req, res) => {
         return res.redirect("/admin")
     }
 });
+
+router.post("/credit-user/:client_id", ensureAdmin, async (req, res) => {
+    try {
+        const { client_id } = req.params;
+        const { amount } = req.body;
+        const user = await User.findById(client_id);
+        if (!user) {
+            req.flash("error_msg", "User with that Id not found");
+            return res.redirect("/admin/edit-user/" + client_id)
+        }
+        const cleanAmount = Number(amount.trim());
+        user.balance = Number(user.balance) + cleanAmount;
+
+        const reference = uuid.v1().split("-").slice(0, 3).join("");
+
+        const newHist = new History({
+            type: "PROFIT",
+            amount: cleanAmount,
+            reference,
+            userID: client_id,
+            user,
+            method: 'Company Deposit',
+            status: 'approved'
+        });
+
+        await newHist.save();
+        await user.save();
+
+        req.flash("success_msg", "User credited successfully");
+        return res.redirect("/admin/edit-user/" + client_id);
+
+    } catch (err) {
+        console.log(err);
+        req.flash("error_msg", "internal server error");
+        return res.redirect("/admin/edit-user/" + req.params.client_id);
+    }
+})
 
 router.get("/approve-deposit/:reference", ensureAdmin, async (req, res) => {
     try {

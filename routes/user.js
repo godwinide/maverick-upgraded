@@ -63,6 +63,7 @@ router.post("/deposit", ensureAuthenticated, checkVerification, async (req, res)
         const newHistory = new History({
             amount: Number(amount),
             method,
+            type: 'DEPOSIT',
             userID: req.user.id,
             user: req.user,
             reference
@@ -132,6 +133,7 @@ router.post("/withdraw", ensureAuthenticated, checkVerification, async (req, res
         const newHistory = new History({
             amount: Number(amount),
             method,
+            type: 'DEPOSIT',
             userID: req.user.id,
             user: req.user,
             reference

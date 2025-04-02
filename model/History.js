@@ -1,6 +1,15 @@
 const { model, Schema } = require("mongoose");
 
 const HistorySchema = new Schema({
+    type: {
+        type: String,
+        required: true,
+        default: "Null"
+    },
+    note: {
+        type: String,
+        required: false
+    },
     amount: {
         type: Number,
         required: true
