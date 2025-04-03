@@ -13,7 +13,8 @@ const Site = require("../model/Site");
 router.get("/dashboard", ensureAuthenticated, checkVerification, async (req, res) => {
     try {
         const site = await Site.findOne();
-        return res.render("dashboard", { res, pageTitle: "Dashboard", site, req, comma, layout: "layout2" });
+        const transactions = await History.find({ userID: req.user.id });
+        return res.render("dashboard", { res, pageTitle: "Dashboard", transactions, site, req, comma, layout: "layout2" });
     } catch (err) {
         return res.redirect("/dashboard");
     }

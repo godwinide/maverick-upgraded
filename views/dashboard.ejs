@@ -2590,63 +2590,40 @@
     <div class="col-lg-12">
       <div class="ibox">
         <div class="ibox-head">
-          <div class="ibox-title">Latest Withdraw</div>
-          <div class="ibox-tools">
-            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-            <a class="dropdown-toggle" data-toggle="dropdown"
-              ><i class="fa fa-ellipsis-v"></i
-            ></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item">option 1</a>
-              <a class="dropdown-item">option 2</a>
-            </div>
-          </div>
+          <div class="ibox-title">Transactions History</div>
         </div>
-        <div class="ibox-body" style="overflow: hidden; overflow-x: scroll">
-          <table class="table table-striped table-hover">
+        <div class="ibox-body table-responsive">
+          <table
+            class="table table-striped table-bordered table-hover"
+            id="example-table"
+            cellspacing="0"
+            width="100%"
+          >
             <thead>
               <tr>
-                <th>TRANS. ID</th>
-                <th>Customer ID</th>
+                <th>Reference</th>
+                <th>Type</th>
                 <th>Amount</th>
+                <th>Date</th>
                 <th>Status</th>
-                <th width="91px">Date</th>
               </tr>
             </thead>
             <tbody>
+              <% transactions.reverse().map(dep => {%>
               <tr>
-                <td>
-                  <a href="#">AT<%= Math.floor(Math.random()*10000) %></a>
-                </td>
-                <td>#<%= Math.floor(Math.random()*10000000000000) %></td>
-                <td>$<%= comma(Math.floor(Math.random()*100000)) %></td>
-                <td>
-                  <span class="badge badge-success">Approved</span>
-                </td>
-                <td><%= new Date().toLocaleDateString() %></td>
+                <td><%= dep.reference %></td>
+                <td><%= dep.type || '' %></td>
+                <td><%= comma(dep.amount) %></td>
+                <td><%= new Date(dep.date).toDateString() %></td>
+                <% if (dep.status == 'pending') {%>
+                <td class="bg-warning"><%= dep.status %></td>
+                <%}%> <% if (dep.status == 'rejected'){ %>
+                <td class="bg-danger text-white"><%= dep.status %></td>
+                <%}%> <% if (dep.status == 'approved'){ %>
+                <td class="bg-success text-white"><%= dep.status %></td>
+                <%}%>
               </tr>
-              <tr>
-                <td>
-                  <a href="#">AT<%= Math.floor(Math.random()*10000) %></a>
-                </td>
-                <td>#<%= Math.floor(Math.random()*10000000000000) %></td>
-                <td>$<%= comma(Math.floor(Math.random()*100000)) %></td>
-                <td>
-                  <span class="badge badge-success">Approved</span>
-                </td>
-                <td><%= new Date().toLocaleDateString() %></td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#">AT<%= Math.floor(Math.random()*10000) %></a>
-                </td>
-                <td>#<%= Math.floor(Math.random()*10000000000000) %></td>
-                <td>$<%= comma(Math.floor(Math.random()*100000)) %></td>
-                <td>
-                  <span class="badge badge-success">Approved</span>
-                </td>
-                <td><%= new Date().toLocaleDateString() %></td>
-              </tr>
+              <%})%>
             </tbody>
           </table>
         </div>

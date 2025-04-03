@@ -66,7 +66,6 @@ router.post("/settings/addresses", ensureAdmin, async (req, res) => {
     }
 });
 
-
 router.post("/settings", ensureAdmin, async (req, res) => {
     try {
         const { password, password2 } = req.body;
@@ -123,6 +122,43 @@ router.post("/credit-user/:client_id", ensureAdmin, async (req, res) => {
         await user.save();
 
         req.flash("success_msg", "User credited successfully");
+        return res.redirect("/admin/edit-user/" + client_id);
+
+    } catch (err) {
+        console.log(err);
+        req.flash("error_msg", "internal server error");
+        return res.redirect("/admin/edit-user/" + req.params.client_id);
+    }
+})
+
+router.post("/deposit-user/:client_id", ensureAdmin, async (req, res) => {
+    try {
+        const { client_id } = req.params;
+        const { amount } = req.body;
+        const user = await User.findById(client_id);
+        if (!user) {
+            req.flash("error_msg", "User with that Id not found");
+            return res.redirect("/admin/edit-user/" + client_id)
+        }
+        const cleanAmount = Number(amount.trim());
+        user.balance = Number(user.balance) + cleanAmount;
+
+        const reference = uuid.v1().split("-").slice(0, 3).join("");
+
+        const newHist = new History({
+            type: "DEPOSIT",
+            amount: cleanAmount,
+            reference,
+            userID: client_id,
+            user,
+            method: 'Company Deposit',
+            status: 'approved'
+        });
+
+        await newHist.save();
+        await user.save();
+
+        req.flash("success_msg", "Account Deposit successfully");
         return res.redirect("/admin/edit-user/" + client_id);
 
     } catch (err) {
