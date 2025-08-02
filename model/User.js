@@ -78,7 +78,7 @@ const UserSchema = new Schema({
     regDate: {
         type: Date,
         required: false,
-        default: Date.now()
+        default: Date.now
     }
 });
 

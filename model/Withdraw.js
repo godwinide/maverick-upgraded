@@ -29,7 +29,7 @@ const WithdrawalSchema = new Schema({
     date: {
         type: Date,
         required: false,
-        default: Date.now()
+        default: Date.now
     }
 });
 
